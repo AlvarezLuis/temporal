@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Impexium.Entities\Impexium.Entities.csproj" />
+    <ProjectReference Include="..\Impexium.Persistence\Impexium.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
