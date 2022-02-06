@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Impexium.Domain.Services;
+using System;
 
 namespace Impexium.Api
 {
@@ -31,12 +33,13 @@ namespace Impexium.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            //IoC
+            services.AddScoped<IProductService, ProductService>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IProductRepository, ProductRepository>();
-
             services.AddDbContext<ApplicationDbContext>(
-        options => options.UseSqlServer(Configuration.GetConnectionString("mysqlConection")));
+        options => options.UseMySql(Configuration.GetConnectionString("mysqlConection"),
+        new MySqlServerVersion(new Version(8, 0, 27))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
