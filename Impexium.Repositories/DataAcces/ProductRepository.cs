@@ -1,9 +1,11 @@
 ﻿using Impexium.Entities.Interfaces;
 using Impexium.Entities.Models;
 using Impexium.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Impexium.Repositories.DataAcces
 {
@@ -14,9 +16,9 @@ namespace Impexium.Repositories.DataAcces
 
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return _context.Products.ToList();
+            return await _context.Products.ToListAsync();
         }
     }
 }

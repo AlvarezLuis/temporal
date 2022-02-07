@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Impexium.Domain.Services;
 using System;
+using Impexium.Domain.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Impexium.Api
 {
@@ -34,12 +36,18 @@ namespace Impexium.Api
         {
             services.AddControllers();
             //IoC
+            services.AddScoped<ActionFilter>();
             services.AddScoped<IProductService, ProductService>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddDbContext<ApplicationDbContext>(
         options => options.UseMySql(Configuration.GetConnectionString("mysqlConection"),
         new MySqlServerVersion(new Version(8, 0, 27))));
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
